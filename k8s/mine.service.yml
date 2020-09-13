@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: minecraft-headless
+  labels:
+    app: minecraft-server
+    tier: backend
+spec:
+  selector:
+    app: minecraft-server
+    tier: backend
+  ports:
+    - name: mcserver
+      protocol: TCP
+      port: 25565
+      targetPort: 25565
+      #nodePort: 30565
+  type: NodePort

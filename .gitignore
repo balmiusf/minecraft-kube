@@ -1,0 +1,7 @@
+# ignore DS_STORE 
+.DS_Store
+docker/.DS_Store
+k8s/.DS_Store
+
+# ignore README
+README.md
