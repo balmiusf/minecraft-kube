@@ -21,24 +21,18 @@ spec:
       containers:
       - name: minecraft-server
         image:  balmiusf/mcserver:latest
-        #command: 
-        #  - /bin/bash
-        #  - -euc
-        #  - |
-        #    exec /home/entrypoint.sh
-        #    java -jar /opt/minecraft/server.jar
         env:
-          - name: JAVA_MEM_SIZE
-            value: "1g"
-          - name: EULA
-            value: "true"
+        - name: JAVA_MEM_SIZE
+          value: "3g"
+        - name: EULA
+          value: "true"
         ports:
-          - name: mcserver
-            containerPort: 25565 
-#          resources:
-#            requests:
-#             memory: 1Gi
-#              cpu: "1"
+        - name: mcserver
+          containerPort: 25565 
+        resources:
+          requests:
+            memory: 3Gi
+            cpu: "1"
         volumeMounts:          
         - name: world-data
           mountPath: /opt/minecraft/world
