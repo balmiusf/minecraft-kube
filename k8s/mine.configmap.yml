@@ -3,8 +3,6 @@ kind: ConfigMap
 metadata:
   name: minecraft-configuration
 data:
-  eula.txt: |
-    eula=true
   server.properties: |
     enable-jmx-monitoring=false
     rcon.port=25575
@@ -14,20 +12,20 @@ data:
     enable-query=false
     generator-settings=
     level-name=world
-    motd=Minecraft in Kubernetes
+    motd=Minecraft on Kubernetes
     query.port=25565
     pvp=true
     generate-structures=true
-    difficulty=easy
+    difficulty=normal
     network-compression-threshold=256
     max-tick-time=60000
     use-native-transport=true
-    max-players=20
+    max-players=10
     online-mode=true
     enable-status=true
     allow-flight=false
     broadcast-rcon-to-ops=true
-    view-distance=10
+    view-distance=15
     max-build-height=256
     server-ip=
     allow-nether=true

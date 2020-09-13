@@ -7,26 +7,31 @@ RUN useradd -M -s /bin/false --uid 1000 minecraft
 # MC VERSION: 1.16.3
 ENV MINECRAFT_VERSION_SHA=f02f4473dbf152c23d7d484952121db0b36698cb
 
-RUN mkdir minecraft & chown minecraft:minecraft /minecraft
+RUN mkdir ./opt/minecraft & chown minecraft:minecraft ./opt/minecraft/
 
-ADD https://launcher.mojang.com/v1/objects/${MINECRAFT_VERSION_SHA}/server.jar ./minecraft/server.jar
+ADD https://launcher.mojang.com/v1/objects/${MINECRAFT_VERSION_SHA}/server.jar ./opt/minecraft/server.jar
 
-RUN chmod +x ./minecraft/server.jar
+RUN chmod +x ./opt/minecraft/server.jar
 
 # STAGE 2 - RUNTIME
 FROM openjdk:16-slim-buster as runtime
 
-ENV JAVA_MEM_SIZE=1g 
+ENV JAVA_MEM_SIZE=1g \ 
+    EULA=false 
 
-WORKDIR /minecraft
+WORKDIR /opt/minecraft
 
-COPY --from=build ./minecraft/server.jar ./server.jar
+COPY --from=build ./opt/minecraft/server.jar ./server.jar
 
-COPY eula.txt eula.txt
-COPY server.properties server.properties
+COPY entrypoint.sh /home/entrypoint.sh
 
-VOLUME ["/minecraft/world"]
+# copy the initial server.properties file
+# COPY server.properties server.properties
+
+VOLUME ["/opt/minecraft/"]
 
 EXPOSE 25565
 
+RUN chmod +x /home/entrypoint.sh
+ENTRYPOINT ["sh", "/home/entrypoint.sh"]
 CMD java -Xmx${JAVA_MEM_SIZE} -Xms${JAVA_MEM_SIZE} -jar server.jar nogui

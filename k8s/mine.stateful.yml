@@ -19,31 +19,32 @@ spec:
     spec:
       restartPolicy: Always
       containers:
-        - name: minecraft-server
-          image:  balmiusf/mcserver:latest
-          command: 
-            - java
-            - -jar
-            - /minecraft/server.jar
-          env:
-            - name: JAVA_MEM_SIZE
-              value: "1g"
-          ports:
-            - name: mcserver
-              containerPort: 25565 
+      - name: minecraft-server
+        image:  balmiusf/mcserver:latest
+        #command: 
+        #  - /bin/bash
+        #  - -euc
+        #  - |
+        #    exec /home/entrypoint.sh
+        #    java -jar /opt/minecraft/server.jar
+        env:
+          - name: JAVA_MEM_SIZE
+            value: "1g"
+          - name: EULA
+            value: "true"
+        ports:
+          - name: mcserver
+            containerPort: 25565 
 #          resources:
 #            requests:
-#             memory: 1Gi  
+#             memory: 1Gi
 #              cpu: "1"
-          volumeMounts:
-            - name: world-data
-              mountPath: minecraft/world/
-            - name: minecraft-config
-              mountPath: minecraft/server.properties
-              subPath: server.properties    
-            - name: minecraft-config
-              mountPath: minecraft/eula.txt
-              subPath: eula.txt      
+        volumeMounts:          
+        - name: world-data
+          mountPath: /opt/minecraft/world
+        - name: minecraft-config
+          mountPath: /opt/minecraft/server.properties
+          subPath: server.properties   
       volumes:
         - name: minecraft-config
           configMap:
