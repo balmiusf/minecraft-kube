@@ -1,4 +1,4 @@
-# Minecraft In Kubernetes
+# Minecraft on Kubernetes
 
 Running Minecraft Server in Kubernetes using a custom docker image. In this repository you will find a custom docker image that has is hosted on dockerhub and kubernetes yaml files for a Minecraft Server. 
 
