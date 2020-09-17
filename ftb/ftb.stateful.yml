@@ -1,48 +1,47 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: minecraft-server
+  name: minecraft-ftb-server
 spec:
   serviceName: minecraft-headless
   replicas: 1
   selector:
     matchLabels:
-      app: minecraft-server
+      app: minecraft-ftb-server
       tier: backend
       track: stable
   template:
     metadata:
       labels:
-        app: minecraft-server
+        app: minecraft-ftb-server
         tier: backend
         track: stable
     spec:
       restartPolicy: Always
       containers:
       - name: minecraft-server
-        image:  balmiusf/mcserver:latest
+        image: itzg/minecraft-server:multiarch
         env:
-        - name: JAVA_MEM_SIZE
-          value: "3g"
+        - name: MEMORY
+          value: "1g"
         - name: EULA
           value: "true"
+        - name: ONLINE_MODE
+          value: "false"
+        - name: TYPE
+          value: FTBA
+        - name: FTB_MODPACK_ID
+          value: "5"       
         ports:
-        - name: mcserver
+        - name: mc-ftb-server
           containerPort: 25565 
-        resources:
-          requests:
-            memory: 3Gi
-            cpu: "1"
+#        resources:
+#          requests:
+#            memory: 3Gi
+#            cpu: "1"
         volumeMounts:          
         - name: world-data
-          mountPath: /opt/minecraft/world
-        - name: minecraft-config
-          mountPath: /opt/minecraft/server.properties
-          subPath: server.properties   
-      volumes:
-        - name: minecraft-config
-          configMap:
-            name: minecraft-configuration
+          mountPath: /opt/minecraft/ftb/world  
   volumeClaimTemplates:
   - metadata:
       name: world-data

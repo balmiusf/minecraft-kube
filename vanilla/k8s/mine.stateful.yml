@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minecraft-forge-server
+spec:
+  serviceName: minecraft-headless
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minecraft-forge-server
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: minecraft-forge-server
+        tier: backend
+        track: stable
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: minecraft-forge-server
+        image: itzg/minecraft-server:latest
+        env:
+        - name: TYPE 
+          value: FORGE
+        - name: EULA
+          value: "true"
+        - name: SERVER_NAME
+          value: "Minecraft Forge on Kubernetes"
+        - name: DIFFICULTY
+          value: normal   
+        ports:
+        - name: mc-forge-server
+          containerPort: 25565 
+        resources:
+          requests:
+            memory: 3Gi
+            cpu: "1"
+        volumeMounts:          
+        - name: data
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
