@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: minecraft-headless
+  name: minecraft-forge-headless
   labels:
-    app: minecraft-server
+    app: minecraft-forge-server
     tier: backend
 spec:
   selector:
-    app: minecraft-server
+    app: minecraft-forge-server
     tier: backend
   ports:
-    - name: mcserver
+    - name: mc-forge-server
       protocol: TCP
       port: 25565
       targetPort: 25565

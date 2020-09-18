@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minecraft-ftb-server
+spec:
+  serviceName: minecraft-ftb-headless
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minecraft-ftb-server
+      tier: backend
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: minecraft-ftb-server
+        tier: backend
+        track: stable
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: minecraft-server
+        image: itzg/minecraft-server:multiarch
+        env:
+        - name: MEMORY
+          value: "4G"
+        - name: EULA
+          value: "true"
+        - name: ONLINE_MODE
+          value: "true"
+        - name: SERVER_NAME
+          value: "Feed the Beast running on GKE"  
+        - name: DIFFICULTY
+          value: normal  
+        - name: TYPE
+          value: FTBA
+        - name: FTB_MODPACK_ID
+          value: "5"                # ftb-interactions modpack
+        - name: LEVEL_TYPE
+          value: voidworld  
+        ports:
+        - name: mc-ftb-server
+          containerPort: 25565 
+        resources:
+          requests:
+            memory: 4Gi
+            cpu: "1"
+        volumeMounts:          
+        - name: data
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
