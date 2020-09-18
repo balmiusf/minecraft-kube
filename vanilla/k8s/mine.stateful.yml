@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: minecraft-forge-server
+  name: minecraft-server
 spec:
   serviceName: minecraft-headless
   replicas: 1
