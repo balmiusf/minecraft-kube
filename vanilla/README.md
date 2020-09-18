@@ -20,7 +20,7 @@ Check the logs to see the progress and to find out when the server is operationa
 When its in the green run **minikube service minecraft-headless --url** and from the output you will find the address to access your server. 
 Open your Minecraft client and paste that address in the address bar and enjoy!
 
-**Note:** Make sure Minikube has enough resources to run the server
+**Note:** Make sure Minikube has enough resources to run the server.
 
 ## How to run on Google Kubernetes Engine
 This is assuming you have a Google Cloud account setup. (You can get 300$ in credits for 3 months if you are setting up for the first time, https://cloud.google.com/free,  sadly Always Free will not be sufficient for this but the 300$ in credits are very useful)

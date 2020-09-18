@@ -27,11 +27,17 @@ spec:
         - name: EULA
           value: "true"
         - name: ONLINE_MODE
-          value: "false"
+          value: "true"
+        - name: SERVER_NAME
+          value: "Feed the Beast running on GKE"  
+        - name: DIFFICULTY
+          value: normal  
         - name: TYPE
           value: FTBA
         - name: FTB_MODPACK_ID
           value: "5"                # ftb-interactions modpack
+        - name: LEVEL_TYPE
+          value: voidworld  
         ports:
         - name: mc-ftb-server
           containerPort: 25565 
